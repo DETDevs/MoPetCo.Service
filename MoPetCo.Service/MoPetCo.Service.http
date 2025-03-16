@@ -1,0 +1,6 @@
+@MoPetCo.Service_HostAddress = http://localhost:5267
+
+GET {{MoPetCo.Service_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
