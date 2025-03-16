@@ -5,6 +5,16 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPetCo.Service", "MoPetCo.Service\MoPetCo.Service.csproj", "{B1E7D648-CEBB-43D6-91AC-2DC1AAEDFC1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPetCo.DataAccess", "MoPetCo.DataAccess\MoPetCo.DataAccess.csproj", "{A88037F3-76B8-4CB7-8734-2DAD105366D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPetCo.DataAccess.Interfaces", "MoPetCo.DataAccess.Interfaces\MoPetCo.DataAccess.Interfaces.csproj", "{45B862C7-5F17-45DB-ADEC-0688E88BC3D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPetCo.BusinessLogic", "MoPetCo.BusinessLogic\MoPetCo.BusinessLogic.csproj", "{C71C5823-6A34-4AEF-BDB5-CAB346113CC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPetCo.BusinessLogic.Interfaces", "MoPetCo.BusinessLogic.Interfaces\MoPetCo.BusinessLogic.Interfaces.csproj", "{23E21B65-09BD-4FEB-9189-FC2C6288E797}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPetCo.Models", "MoPetCo.Models\MoPetCo.Models.csproj", "{4CA17122-1266-48DC-80F0-476B69C6E1FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +25,26 @@ Global
 		{B1E7D648-CEBB-43D6-91AC-2DC1AAEDFC1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1E7D648-CEBB-43D6-91AC-2DC1AAEDFC1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1E7D648-CEBB-43D6-91AC-2DC1AAEDFC1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A88037F3-76B8-4CB7-8734-2DAD105366D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A88037F3-76B8-4CB7-8734-2DAD105366D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A88037F3-76B8-4CB7-8734-2DAD105366D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A88037F3-76B8-4CB7-8734-2DAD105366D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45B862C7-5F17-45DB-ADEC-0688E88BC3D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45B862C7-5F17-45DB-ADEC-0688E88BC3D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45B862C7-5F17-45DB-ADEC-0688E88BC3D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45B862C7-5F17-45DB-ADEC-0688E88BC3D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C71C5823-6A34-4AEF-BDB5-CAB346113CC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C71C5823-6A34-4AEF-BDB5-CAB346113CC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C71C5823-6A34-4AEF-BDB5-CAB346113CC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C71C5823-6A34-4AEF-BDB5-CAB346113CC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23E21B65-09BD-4FEB-9189-FC2C6288E797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23E21B65-09BD-4FEB-9189-FC2C6288E797}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23E21B65-09BD-4FEB-9189-FC2C6288E797}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23E21B65-09BD-4FEB-9189-FC2C6288E797}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CA17122-1266-48DC-80F0-476B69C6E1FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CA17122-1266-48DC-80F0-476B69C6E1FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CA17122-1266-48DC-80F0-476B69C6E1FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CA17122-1266-48DC-80F0-476B69C6E1FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
