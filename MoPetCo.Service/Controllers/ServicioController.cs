@@ -17,11 +17,11 @@ namespace MoPetCo.Service.Controllers
         }
 
         [HttpPost(Name = "GuardarServicio")]
-        public async Task<IActionResult> Guardar([FromBody] Servicio producto)
+        public async Task<IActionResult> Guardar([FromBody] Servicio servicio)
         {
             try
             {
-                var resultado = await this.servicio.GuardarServioAsync(producto);
+                var resultado = await this.servicio.GuardarServioAsync(servicio);
 
                 if (!resultado.IsSuccess)
                 return StatusCode(StatusCodes.Status400BadRequest, resultado.Content);

@@ -14,7 +14,7 @@ namespace MoPetCo.DataAccess
             this.connectionManager = connectionManager;
         }
 
-        public async Task<Response<IEnumerable<Models.Servicio>>> GuardarServioAsync(Models.Servicio servicio)
+        public async Task<Response<Models.Servicio>> GuardarServioAsync(Models.Servicio servicio)
         {
             try
             {
@@ -33,11 +33,11 @@ namespace MoPetCo.DataAccess
                     commandType: CommandType.StoredProcedure
                 );
 
-                return new Response<IEnumerable<Models.Servicio>> { Content = resultado, IsSuccess = true, Message = "Servicio Guardar correctamente" };
+                return new Response<Models.Servicio> { Content = resultado.FirstOrDefault(), IsSuccess = true, Message = "Servicio Guardadado correctamente" };
 
             } catch(Exception ex)
             {
-                return new Response<IEnumerable<Models.Servicio>> { Message = ex.Message, IsSuccess = false };
+                return new Response<Models.Servicio> { Message = ex.Message, IsSuccess = false };
             }   
         }
 

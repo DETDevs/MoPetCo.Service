@@ -19,7 +19,6 @@ namespace MoPetCo.Models
 
         public string SubTitulo { get; set; }
 
-        [Required]
         public string Incluye { get; set; }
 
         [Required]

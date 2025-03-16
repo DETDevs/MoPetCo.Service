@@ -9,7 +9,7 @@ namespace MoPetCo.DataAccess.Interfaces
 {
     public interface IServicio
     {
-        Task<Response<IEnumerable<Models.Servicio>>> GuardarServioAsync(Models.Servicio servicio);
+        Task<Response<Models.Servicio>> GuardarServioAsync(Models.Servicio servicio);
         Task<Response<IEnumerable<Models.Servicio>>> ObtenerServiciosAsync();
     }
 }

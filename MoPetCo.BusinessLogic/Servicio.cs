@@ -19,7 +19,7 @@ namespace MoPetCo.BusinessLogic
             this.servicio = servicio;
         }
 
-        public async Task<Response<IEnumerable<Models.Servicio>>> GuardarServioAsync(Models.Servicio servicio)
+        public async Task<Response<Models.Servicio>> GuardarServioAsync(Models.Servicio servicio)
         {
             return await this.servicio.GuardarServioAsync(servicio);
         }
