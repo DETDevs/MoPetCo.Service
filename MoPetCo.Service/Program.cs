@@ -1,3 +1,5 @@
+using MoPetCo.BusinessLogic;
+using MoPetCo.BusinessLogic.Interfaces;
 using MoPetCo.DataAccess;
 using MoPetCo.DataAccess.Interfaces;
 
@@ -13,6 +15,8 @@ builder.Services.AddSwaggerGen();
 //Configuring services for the application
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddSingleton<IConnectionManager, ConnectionManager>();
+builder.Services.AddScoped<MoPetCo.DataAccess.Interfaces.IServicio, MoPetCo.DataAccess.Servicio>();
+builder.Services.AddScoped<MoPetCo.BusinessLogic.Interfaces.IServicio, MoPetCo.BusinessLogic.Servicio>();
 
 var app = builder.Build();
 
