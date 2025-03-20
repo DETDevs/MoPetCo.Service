@@ -88,5 +88,32 @@ namespace MoPetCo.DataAccess
                 return new Response<Models.RangoPeso> { Message = ex.Message, IsSuccess = false };
             }
         }
+
+        public async Task<Response<Models.Precio>> GuardarPrecioAsync(Precio precio)
+        {
+            try
+            {
+                using var connection = this.connectionManager.GetConnectionString(ConnectionManager.connectionStringKey);
+
+                var resultado = await connection.QueryAsync<Models.Precio>(
+
+                    "sp_Precio_Guardar",
+                    param: new
+                    {
+                        precio.Monto,
+                        IdRangoPrecio = precio.RangoPeso.IdRango,
+                        IdServicio = precio.Servicio.IdServicios
+                    },
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return new Response<Models.Precio> { Content = resultado.FirstOrDefault(), IsSuccess = true, Message = "Rango de peso Guardadado correctamente" };
+
+            }
+            catch (Exception ex)
+            {
+                return new Response<Models.Precio> { Message = ex.Message, IsSuccess = false };
+            }
+        }
     }
 }

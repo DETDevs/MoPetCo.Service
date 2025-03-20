@@ -71,5 +71,24 @@ namespace MoPetCo.Service.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex);
             }
         }
+
+        [HttpPost(Name = "GuardarPrecio")]
+        public async Task<IActionResult> GuardarPrecio([FromBody] Precio precio)
+        {
+            try
+            {
+                var resultado = await this.servicio.GuardarPrecioAsync(precio);
+
+                if (!resultado.IsSuccess)
+                    return StatusCode(StatusCodes.Status400BadRequest, resultado.Content);
+
+                return Ok(resultado.Message);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
     }
 }

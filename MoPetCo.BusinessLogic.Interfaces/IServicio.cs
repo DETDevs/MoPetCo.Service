@@ -11,6 +11,7 @@ namespace MoPetCo.BusinessLogic.Interfaces
     {
         Task<Response<Models.Servicio>> GuardarServioAsync(Models.Servicio servicio);
         Task<Response<Models.RangoPeso>> GuardarRangoPesoAsync(Models.RangoPeso rangoPeso);
+        Task<Response<Models.Precio>> GuardarPrecioAsync(Models.Precio precio);
         Task<Response<IEnumerable<Models.Servicio>>> ObtenerServiciosAsync();
     }
 }

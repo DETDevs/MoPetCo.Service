@@ -24,5 +24,9 @@ namespace MoPetCo.BusinessLogic
         {
             return this.servicio.GuardarRangoPesoAsync(rangoPeso);
         }
+        public Task<Response<Precio>> GuardarPrecioAsync(Precio precio)
+        {
+            return this.servicio.GuardarPrecioAsync(precio);
+        }
     }
 }
