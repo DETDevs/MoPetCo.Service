@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MoPetCo.BusinessLogic.Interfaces\MoPetCo.BusinessLogic.Interfaces.csproj" />
     <ProjectReference Include="..\MoPetCo.DataAccess.Interfaces\MoPetCo.DataAccess.Interfaces.csproj" />
+    <ProjectReference Include="..\MoPetCo.Extensions\MoPetCo.Extensions.csproj" />
   </ItemGroup>
 
 </Project>

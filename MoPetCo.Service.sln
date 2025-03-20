@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPetCo.Service", "MoPetCo.Service\MoPetCo.Service.csproj", "{B1E7D648-CEBB-43D6-91AC-2DC1AAEDFC1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoPetCo.Service", "MoPetCo.Service\MoPetCo.Service.csproj", "{B1E7D648-CEBB-43D6-91AC-2DC1AAEDFC1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPetCo.DataAccess", "MoPetCo.DataAccess\MoPetCo.DataAccess.csproj", "{A88037F3-76B8-4CB7-8734-2DAD105366D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoPetCo.DataAccess", "MoPetCo.DataAccess\MoPetCo.DataAccess.csproj", "{A88037F3-76B8-4CB7-8734-2DAD105366D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPetCo.DataAccess.Interfaces", "MoPetCo.DataAccess.Interfaces\MoPetCo.DataAccess.Interfaces.csproj", "{45B862C7-5F17-45DB-ADEC-0688E88BC3D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoPetCo.DataAccess.Interfaces", "MoPetCo.DataAccess.Interfaces\MoPetCo.DataAccess.Interfaces.csproj", "{45B862C7-5F17-45DB-ADEC-0688E88BC3D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPetCo.BusinessLogic", "MoPetCo.BusinessLogic\MoPetCo.BusinessLogic.csproj", "{C71C5823-6A34-4AEF-BDB5-CAB346113CC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoPetCo.BusinessLogic", "MoPetCo.BusinessLogic\MoPetCo.BusinessLogic.csproj", "{C71C5823-6A34-4AEF-BDB5-CAB346113CC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPetCo.BusinessLogic.Interfaces", "MoPetCo.BusinessLogic.Interfaces\MoPetCo.BusinessLogic.Interfaces.csproj", "{23E21B65-09BD-4FEB-9189-FC2C6288E797}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoPetCo.BusinessLogic.Interfaces", "MoPetCo.BusinessLogic.Interfaces\MoPetCo.BusinessLogic.Interfaces.csproj", "{23E21B65-09BD-4FEB-9189-FC2C6288E797}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPetCo.Models", "MoPetCo.Models\MoPetCo.Models.csproj", "{4CA17122-1266-48DC-80F0-476B69C6E1FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoPetCo.Models", "MoPetCo.Models\MoPetCo.Models.csproj", "{4CA17122-1266-48DC-80F0-476B69C6E1FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPetCo.Extensions", "MoPetCo.Extensions\MoPetCo.Extensions.csproj", "{2DCAF449-2440-4F7B-9540-2EF4468A7079}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{4CA17122-1266-48DC-80F0-476B69C6E1FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CA17122-1266-48DC-80F0-476B69C6E1FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CA17122-1266-48DC-80F0-476B69C6E1FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DCAF449-2440-4F7B-9540-2EF4468A7079}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DCAF449-2440-4F7B-9540-2EF4468A7079}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DCAF449-2440-4F7B-9540-2EF4468A7079}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DCAF449-2440-4F7B-9540-2EF4468A7079}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
