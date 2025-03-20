@@ -1,12 +1,4 @@
-﻿using MoPetCo.BusinessLogic.Interfaces;
-using MoPetCo.DataAccess.Interfaces;
-using MoPetCo.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using MoPetCo.Models;
 
 namespace MoPetCo.BusinessLogic
 {
@@ -27,6 +19,10 @@ namespace MoPetCo.BusinessLogic
         public async Task<Response<IEnumerable<Models.Servicio>>> ObtenerServiciosAsync()
         {
             return await this.servicio.ObtenerServiciosAsync();
+        }
+        public Task<Response<RangoPeso>> GuardarRangoPesoAsync(RangoPeso rangoPeso)
+        {
+            return this.servicio.GuardarRangoPesoAsync(rangoPeso);
         }
     }
 }

@@ -61,5 +61,32 @@ namespace MoPetCo.DataAccess
                 return new Response<IEnumerable<Models.Servicio>> { Message = ex.Message, IsSuccess = false };
             }
         }
+
+        public async Task<Response<Models.RangoPeso>> GuardarRangoPesoAsync(RangoPeso rangoPeso)
+        {
+            try
+            {
+                using var connection = this.connectionManager.GetConnectionString(ConnectionManager.connectionStringKey);
+
+                var resultado = await connection.QueryAsync<Models.RangoPeso>(
+
+                    "sp_RangoPeso_Guardar",
+                    param: new
+                    {
+                        rangoPeso.Nombre,
+                        rangoPeso.PesoMin,
+                        rangoPeso.PesoMax
+                    },
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return new Response<Models.RangoPeso> { Content = resultado.FirstOrDefault(), IsSuccess = true, Message = "Rango de peso Guardadado correctamente" };
+
+            }
+            catch (Exception ex)
+            {
+                return new Response<Models.RangoPeso> { Message = ex.Message, IsSuccess = false };
+            }
+        }
     }
 }

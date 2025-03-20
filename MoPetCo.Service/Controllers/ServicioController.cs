@@ -52,5 +52,24 @@ namespace MoPetCo.Service.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex);
             }
         }
+
+        [HttpPost(Name = "GuardarRangoPeso")]
+        public async Task<IActionResult> GuardarRangoPeso([FromBody] RangoPeso rangoPeso)
+        {
+            try
+            {
+                var resultado = await this.servicio.GuardarRangoPesoAsync(rangoPeso);
+
+                if (!resultado.IsSuccess)
+                    return StatusCode(StatusCodes.Status400BadRequest, resultado.Content);
+
+                return Ok(resultado.Message);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
     }
 }
