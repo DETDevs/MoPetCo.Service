@@ -28,7 +28,9 @@ namespace MoPetCo.DataAccess
                         servicio.Titulo,
                         servicio.SubTitulo,
                         servicio.Incluye,
-                        servicio.Descripcion
+                        servicio.Descripcion,
+                        servicio.UrlImagen,
+                        servicio.Icon
                     },
                     commandType: CommandType.StoredProcedure
                 );
