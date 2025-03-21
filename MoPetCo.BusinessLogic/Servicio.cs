@@ -31,7 +31,22 @@ namespace MoPetCo.BusinessLogic
 
         public Task<Response<IEnumerable<Models.Servicio>>> ObtenerServiciosDetallesAsync()
         {
-            return this.servicio.ObtenerServiciosDetallesAsync();
+            var resultado = this.servicio.ObtenerServiciosDetallesAsync();
+
+            // Agrupar los servicios para evitar duplicados en caso de que haya múltiples precios para el mismo servicio
+            var serviciosAgrupados = resultado.Result.Content
+                    .GroupBy(s => s.IdServicio)
+                    .Select(g =>
+                    {
+                        var servicio = g.First();
+                        servicio.Precio = g.Select(s => s.Precio).SelectMany(p => p).ToList(); // Aplanar la lista de precios
+                        return servicio;
+                    })
+                    .ToList();
+
+            resultado.Result.Content = serviciosAgrupados;
+
+            return resultado;
         }
     }
 }

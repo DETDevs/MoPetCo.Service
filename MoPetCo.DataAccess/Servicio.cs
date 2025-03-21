@@ -74,8 +74,15 @@ namespace MoPetCo.DataAccess
                     splitOn: "IdPrecio,IdRango",
                     map: (servicio, precio, rango) =>
                     {
-                        servicio.Precio = precio;
-                        servicio.RangoPeso = rango;
+                        if (servicio.Precio == null)
+                        {
+                            servicio.Precio = new List<Models.Precio>();
+                        }
+
+                        // Asociamos el precio y el rango
+                        servicio.Precio.Add(precio);
+                        precio.RangoPeso = rango;  // Asignamos el rango al precio
+
                         return servicio;
                     }
                 );
