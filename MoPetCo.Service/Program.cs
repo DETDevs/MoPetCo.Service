@@ -1,3 +1,9 @@
+using MoPetCo.BusinessLogic;
+using MoPetCo.BusinessLogic.Interfaces;
+using MoPetCo.DataAccess;
+using MoPetCo.DataAccess.Interfaces;
+using MoPetCo.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,14 +13,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Configuring services for the application
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+builder.Services.AddMoPetCoServices();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
