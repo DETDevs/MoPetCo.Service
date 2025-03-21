@@ -7,7 +7,7 @@ namespace MoPetCo.Models
     public class Servicio
     {
         [Key]
-        public int IdServicios { get; set; }
+        public int IdServicio { get; set; }
 
         [Required, MaxLength(255)]
         public string Titulo { get; set; }
@@ -18,6 +18,11 @@ namespace MoPetCo.Models
 
         [Required]
         public string Descripcion { get; set; }
+        public string Icon { get; set; }
+        public string UrlImagen { get; set; }
+
+        public RangoPeso RangoPeso { get; set; }
+        public Precio Precio { get; set; }
 
         // Propiedad NO mapeada para manejar el JSON como lista de objetos
         [NotMapped]

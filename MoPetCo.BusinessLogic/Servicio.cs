@@ -28,5 +28,10 @@ namespace MoPetCo.BusinessLogic
         {
             return this.servicio.GuardarPrecioAsync(precio);
         }
+
+        public Task<Response<IEnumerable<Models.Servicio>>> ObtenerServiciosDetallesAsync()
+        {
+            return this.servicio.ObtenerServiciosDetallesAsync();
+        }
     }
 }

@@ -62,6 +62,33 @@ namespace MoPetCo.DataAccess
             }
         }
 
+        public async Task<Response<IEnumerable<Models.Servicio>>> ObtenerServiciosDetallesAsync()
+        {
+            try
+            {
+                using var connection = this.connectionManager.GetConnectionString(ConnectionManager.connectionStringKey);
+
+                var resultado = await connection.QueryAsync<Models.Servicio, Models.Precio, Models.RangoPeso, Models.Servicio>(
+                    "sp_ServicioDetalles_Listar",
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "IdPrecio,IdRango",
+                    map: (servicio, precio, rango) =>
+                    {
+                        servicio.Precio = precio;
+                        servicio.RangoPeso = rango;
+                        return servicio;
+                    }
+                );
+
+                return new Response<IEnumerable<Models.Servicio>> { Content = resultado, IsSuccess = true };
+
+            }
+            catch (Exception ex)
+            {
+                return new Response<IEnumerable<Models.Servicio>> { Message = ex.Message, IsSuccess = false };
+            }
+        }
+
         public async Task<Response<Models.RangoPeso>> GuardarRangoPesoAsync(RangoPeso rangoPeso)
         {
             try
@@ -102,7 +129,7 @@ namespace MoPetCo.DataAccess
                     {
                         precio.Monto,
                         IdRangoPrecio = precio.RangoPeso.IdRango,
-                        IdServicio = precio.Servicio.IdServicios
+                        IdServicio = precio.Servicio.IdServicio
                     },
                     commandType: CommandType.StoredProcedure
                 );
