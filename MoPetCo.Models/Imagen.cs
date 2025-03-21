@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace MoPetCo.Models
 {
@@ -8,9 +9,10 @@ namespace MoPetCo.Models
         public int IdImagen { get; set; }
 
         [Required]
-        public string Descripcion { get; set; }
+        public string? Descripcion { get; set; }
 
         [Required, MaxLength(500)]
-        public string UrlImagen { get; set; }
+        public string? UrlImagen { get; set; }
+        public IFormFile? DataImagen { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MoPetCo.BusinessLogic.Interfaces;
+﻿using MoPetCo.BusinessLogic.Extensions;
+using MoPetCo.BusinessLogic.Interfaces;
 using MoPetCo.Models;
 
 namespace MoPetCo.BusinessLogic
@@ -6,8 +7,8 @@ namespace MoPetCo.BusinessLogic
     public class Contacto : IContacto
     {
         private readonly DataAccess.Interfaces.IContacto? contacto;
-        private readonly MoPetCo.BusinessLogic.EmailService? emailService;
-        public Contacto(DataAccess.Interfaces.IContacto? contacto, BusinessLogic.EmailService? emailService)
+        private readonly EmailService? emailService;
+        public Contacto(DataAccess.Interfaces.IContacto? contacto, EmailService? emailService)
         {
             this.contacto = contacto;
             this.emailService = emailService;
