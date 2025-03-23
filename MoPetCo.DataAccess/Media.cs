@@ -45,9 +45,25 @@ namespace MoPetCo.DataAccess
             }
         }
 
-        public Task<Models.Response<IEnumerable<Models.Imagen>>> ObtenerImagenesAsync()
+        public async Task<Models.Response<IEnumerable<Models.Imagen>>> ObtenerImagenesAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                using var connection = this.connectionManager.GetConnectionString(ConnectionManager.connectionStringKey);
+
+                var resultado = await connection.QueryAsync<Models.Imagen>(
+
+                    "sp_Imagen_Listar",
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return new Response<IEnumerable<Models.Imagen>> { Content = resultado, IsSuccess = true };
+
+            }
+            catch (Exception ex)
+            {
+                return new Response<IEnumerable<Models.Imagen>> { Message = ex.Message, IsSuccess = false };
+            }
         }
     }
 }
