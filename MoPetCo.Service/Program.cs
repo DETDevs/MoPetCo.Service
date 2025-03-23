@@ -18,6 +18,17 @@ builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddMoPetCoServices();
 builder.Services.AddHttpClient();
 
+// CORS: Permitir peticiones desde Vite (localhost:5173)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowViteFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,6 +37,8 @@ var app = builder.Build();
 //    app.UseSwagger();
 //    app.UseSwaggerUI();
 //}
+
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -34,5 +47,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowViteFrontend");
 
 app.Run();
