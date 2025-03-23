@@ -16,6 +16,7 @@ builder.Services.AddSwaggerGen();
 //Configuring services for the application
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddMoPetCoServices();
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
