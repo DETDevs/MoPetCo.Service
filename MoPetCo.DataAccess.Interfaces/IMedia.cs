@@ -11,5 +11,6 @@ namespace MoPetCo.DataAccess.Interfaces
     {
         Task<Response<Imagen>> GuardarImagenAsync(Imagen img);
         Task<Response<IEnumerable<Imagen>>> ObtenerImagenesAsync();
+        Task<Response<IEnumerable<Video>>> ObtenerVideosAsync();
     }
 }

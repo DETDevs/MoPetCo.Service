@@ -36,5 +36,10 @@ namespace MoPetCo.BusinessLogic
         {
             return media.ObtenerImagenesAsync();
         }
+
+        public Task<Response<IEnumerable<Video>>> ObtenerVideoAsync()
+        {
+            return media.ObtenerVideosAsync();
+        }
     }
 }
