@@ -14,21 +14,22 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Configuring services for the application
-builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);   
 builder.Services.AddMoPetCoServices();
 builder.Services.AddHttpClient();
 
 // CORS: Permitir peticiones desde Vite (localhost:5173)
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowViteFrontend", policy =>
-    {
-        policy.WithOrigins("http://pruebafront-001-site1.mtempurl.com")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
 });
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,6 +49,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors("AllowViteFrontend");
+app.UseCors("AllowAll");
 
 app.Run();
