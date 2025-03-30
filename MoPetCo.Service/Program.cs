@@ -23,7 +23,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowViteFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins("http://pruebafront-001-site1.mtempurl.com")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
