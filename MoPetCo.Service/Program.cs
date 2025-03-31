@@ -1,8 +1,9 @@
 using MoPetCo.BusinessLogic;
+using MoPetCo.BusinessLogic.Extensions;
 using MoPetCo.BusinessLogic.Interfaces;
 using MoPetCo.DataAccess;
-using MoPetCo.DataAccess.Interfaces;
 using MoPetCo.Extensions;
+using MoPetCo.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);   
 builder.Services.AddMoPetCoServices();
 builder.Services.AddHttpClient();
+
+builder.Services.AddScoped<CustomValuesConfiguration>();
+builder.Services.AddScoped<IServicio, MoPetCo.BusinessLogic.Servicio>();
+builder.Services.AddScoped<IContacto, MoPetCo.BusinessLogic.Contacto>();
+builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<FileHelper>();
+builder.Services.AddScoped<IMedia, MoPetCo.BusinessLogic.Media>();
 
 // CORS: Permitir peticiones desde Vite (localhost:5173)
 builder.Services.AddCors(options =>

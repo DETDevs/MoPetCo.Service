@@ -10,10 +10,13 @@ namespace MoPetCo.BusinessLogic
     {
         private readonly DataAccess.Interfaces.IContacto? contacto;
         private readonly EmailService? emailService;
-        public Contacto(DataAccess.Interfaces.IContacto? contacto, EmailService? emailService)
+        private readonly MoPetCo.Extensions.CustomValuesConfiguration _customValuesConfiguration;
+
+        public Contacto(DataAccess.Interfaces.IContacto? contacto, EmailService? emailService, MoPetCo.Extensions.CustomValuesConfiguration customValuesConfiguration)
         {
             this.contacto = contacto;
             this.emailService = emailService;
+            _customValuesConfiguration = customValuesConfiguration;
         }
 
         public async Task<Response<Models.Contacto>> EnviarEmailAsync(Models.Contacto contacto)
@@ -88,7 +91,7 @@ namespace MoPetCo.BusinessLogic
                 ";
             #endregion
 
-            var emailService = new EmailService();
+            var emailService = new EmailService(_customValuesConfiguration);
             await emailService.EnviarCorreoAsync(
                 "at2899743@gmail.com",
                 "MoPetCo",

@@ -5,16 +5,26 @@ namespace MoPetCo.BusinessLogic.Extensions
 {
     public class EmailService
     {
-        private readonly string smtpServer = "smtp.gmail.com"; // Servidor SMTP (Ej: Gmail)
-        private readonly int smtpPort = 587; // Puerto SMTP (587 para TLS)
-        private readonly string smtpUser = ""; // Correo remitente
-        private readonly string smtpPass = ""; // Contraseña o App Password
+        private readonly MoPetCo.Extensions.CustomValuesConfiguration _customValuesConfiguration;
+
+        public EmailService(MoPetCo.Extensions.CustomValuesConfiguration? customValuesConfiguration)
+        {
+            _customValuesConfiguration = customValuesConfiguration;
+        }
 
         public async Task EnviarCorreoAsync(string destinatario, string asunto, string mensaje)
         {
             try
             {
-                using (var client = new SmtpClient(smtpServer, smtpPort))
+                var EmailConfig = _customValuesConfiguration.GetCustomValueByName("EmailConfiguration");
+
+                var smtpServer = EmailConfig.Values["smtpServer"];
+                var smtpPort = EmailConfig.Values["smtpPort"];
+                var smtpUser = EmailConfig.Values["smtpUser"];
+                var smtpPass = EmailConfig.Values["smtpPass"];
+
+
+                using (var client = new SmtpClient(smtpServer, Convert.ToInt32(smtpPort)))
                 {
                     client.Credentials = new NetworkCredential(smtpUser, smtpPass);
                     client.EnableSsl = true;
