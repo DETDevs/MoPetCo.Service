@@ -24,6 +24,7 @@ builder.Services.AddScoped<IServicio, MoPetCo.BusinessLogic.Servicio>();
 builder.Services.AddScoped<IContacto, MoPetCo.BusinessLogic.Contacto>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<FileHelper>();
+builder.Services.AddScoped<GoogleService>();
 builder.Services.AddScoped<IMedia, MoPetCo.BusinessLogic.Media>();
 
 // CORS: Permitir peticiones desde Vite (localhost:5173)
