@@ -42,7 +42,7 @@ namespace MoPetCo.Service.Controllers
             if (!response.IsSuccess)
                 return BadRequest(new { message = response.Message });
 
-            return Ok(response);
+            return Content(response.Content, "application/json");
         }
     }
 }
