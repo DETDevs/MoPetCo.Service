@@ -1,6 +1,8 @@
 ﻿using MoPetCo.BusinessLogic.Interfaces;
 using MoPetCo.Models;
+using Newtonsoft.Json;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 
 namespace MoPetCo.BusinessLogic
@@ -19,7 +21,7 @@ namespace MoPetCo.BusinessLogic
         public async Task<Response<string>> ObtenerReviewsAsync(string placeId)
         {
             var configGoogleMaps = _customValuesConfiguration.GetCustomValueByName("GoogleMaps");
-            
+
             var apiKey = configGoogleMaps.Values["apiKey"];
             var urlApi = configGoogleMaps.Values["apiUrl"];
 
@@ -28,13 +30,13 @@ namespace MoPetCo.BusinessLogic
             if (!response.IsSuccessStatusCode)
                 return new Response<string>
                 {
-                     IsSuccess = false,
+                    IsSuccess = false,
                     Message = "Error al consumir la API de Google",
                     Content = null
                 };
 
             var json = await response.Content.ReadAsStringAsync();
-            
+
             return new Response<string>
             {
                 IsSuccess = true,
@@ -45,33 +47,79 @@ namespace MoPetCo.BusinessLogic
 
         public async Task<Response<bool>> VerificarCaptchaAsync(string token)
         {
-            var configCaptcha = _customValuesConfiguration.GetCustomValueByName("GoogleCaptcha");
+            var configGoogleCaptcha = _customValuesConfiguration.GetCustomValueByName("GoogleCaptcha");
 
-            var secretKey = configCaptcha.Values["secretKey"];
-            var apiUrl = configCaptcha.Values["apiUrl"];
+            var googleUrl = configGoogleCaptcha.Values["apiUrl"];
+            var secretKey = configGoogleCaptcha.Values["secretKey"];
 
-            using var httpClient = new HttpClient();
-            var response = await _httpClient.PostAsync($"{apiUrl}{secretKey}&response={token}", null);
-
-            var responseContent = await response.Content.ReadAsStringAsync();
-
-            if (response.IsSuccessStatusCode)
+            if (string.IsNullOrEmpty(secretKey))
             {
-                var captchaResult = JsonSerializer.Deserialize<CaptchaResponse>(responseContent);
-                if (captchaResult.success == true)
-                    return new Response<bool>
-                    {
-                        IsSuccess = true,
-                        Message = "Validacion exitosa",
-                        Content = true
-                    };
+                return new Response<bool>
+                {
+                    IsSuccess = false,
+                    Message = "No se encontró la clave secreta de reCAPTCHA en la configuración",
+                    Content = false
+                };
+            }
+
+            var content = new FormUrlEncodedContent(new[]
+            {
+                  new KeyValuePair<string, string>("secret", secretKey),
+                  new KeyValuePair<string, string>("response", token)
+            });
+
+            HttpResponseMessage response;
+            try
+            {
+                response = await _httpClient.PostAsync(googleUrl, content);
+            }
+            catch (System.Exception ex)
+            {
+                return new Response<bool>
+                {
+                    IsSuccess = false,
+                    Message = $"Error al consumir la API de Google: {ex.Message}",
+                    Content = false
+                };
+            }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return new Response<bool>
+                {
+                    IsSuccess = false,
+                    Message = "Error al consumir la API de Google (Status Code != 200).",
+                    Content = false
+                };
+            }
+
+            var json = await response.Content.ReadAsStringAsync();
+            if (string.IsNullOrEmpty(json))
+            {
+                return new Response<bool>
+                {
+                    IsSuccess = false,
+                    Message = "Error: la respuesta de Google está vacía.",
+                    Content = false
+                };
+            }
+
+            var googleResponse = JsonConvert.DeserializeObject<GoogleCaptchaResponse>(json);
+            if (googleResponse == null)
+            {
+                return new Response<bool>
+                {
+                    IsSuccess = false,
+                    Message = "No se pudo deserializar la respuesta de Google.",
+                    Content = false
+                };
             }
 
             return new Response<bool>
             {
-                IsSuccess = false,
-                Message = $"Error al consumir la API de Google: {response.Content}",
-                Content = false
+                IsSuccess = true,
+                Message = "Verificación de reCAPTCHA completada correctamente.",
+                Content = googleResponse.Success
             };
         }
     }

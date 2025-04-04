@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace MoPetCo.Models
 {
-    public class CaptchaResponse
+    // Este modelo mapea la respuesta JSON que devuelve Google
+    public class GoogleCaptchaResponse
     {
-        public bool success { get; set; }
-        public DateTime challenge_ts { get; set; }
-        public string? hostname { get; set; }
-        public List<string>? errorCodes { get; set; }
+        public bool Success { get; set; }
 
+        public string ChallengeTimeStamp { get; set; }
+
+        public string Hostname { get; set; }
+
+        public string[] ErrorCodes { get; set; }
     }
 }

@@ -24,12 +24,14 @@ namespace MoPetCo.Service.Controllers
         [HttpPost("verificar-captcha")]
         public async Task<IActionResult> VerificarCaptcha([FromBody] string token)
         {
-           var response = await _googleService.VerificarCaptchaAsync(token);
+            var response = await _googleService.VerificarCaptchaAsync(token);
 
             if (!response.IsSuccess)
+            {
                 return BadRequest(new { message = response.Message });
+            }
 
-            return Ok(new { message = response.Message });
+            return Ok(response);
         }
 
         [HttpGet("reviews")]
