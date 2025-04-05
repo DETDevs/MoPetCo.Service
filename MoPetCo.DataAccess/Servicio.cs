@@ -155,5 +155,43 @@ namespace MoPetCo.DataAccess
                 return new Response<Models.Precio> { Message = ex.Message, IsSuccess = false };
             }
         }
+
+        public async Task<Response<IEnumerable<Models.Servicio>>> ObtenerSubServiciosDetallesAsync()
+        {
+            try
+            {
+                using var connection = this.connectionManager.GetConnectionString(ConnectionManager.connectionStringKey);
+
+                var resultado = await connection.QueryAsync<Models.Servicio, Models.Precio, Models.RangoPeso, Models.Servicio>(
+                    "sp_SubServicioDetalles_Listar",
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "IdPrecio,IdRango",
+                    map: (servicio, precio, rango) =>
+                    {
+                        // Inicializamos la lista de precios si es null
+                        if (servicio.Precio == null)
+                        {
+                            servicio.Precio = new List<Models.Precio>();
+                        }
+
+                        // Si el precio no es null, lo agregamos a la lista
+                        if (precio != null)
+                        {
+                            servicio.Precio.Add(precio);
+                            precio.RangoPeso = rango;  // Asignamos el rango al precio
+                        }
+
+                        return servicio;
+                    }
+                );
+
+                return new Response<IEnumerable<Models.Servicio>> { Content = resultado, IsSuccess = true };
+
+            }
+            catch (Exception ex)
+            {
+                return new Response<IEnumerable<Models.Servicio>> { Message = ex.Message, IsSuccess = false };
+            }
+        }
     }
 }

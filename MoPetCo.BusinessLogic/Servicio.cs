@@ -48,5 +48,25 @@ namespace MoPetCo.BusinessLogic
 
             return resultado;
         }
+
+        public Task<Response<IEnumerable<Models.Servicio>>> ObtenerSubServiciosDetallesAsync()
+        {
+            var resultado = this.servicio.ObtenerSubServiciosDetallesAsync();
+
+            // Agrupar los servicios para evitar duplicados en caso de que haya múltiples precios para el mismo servicio
+            var serviciosAgrupados = resultado.Result.Content
+                    .GroupBy(s => s.IdSubServicio)
+                    .Select(g =>
+                    {
+                        var servicio = g.First();
+                        servicio.Precio = g.Select(s => s.Precio).SelectMany(p => p).ToList(); // Aplanar la lista de precios
+                        return servicio;
+                    })
+                    .ToList();
+
+            resultado.Result.Content = serviciosAgrupados;
+
+            return resultado;
+        }
     }
 }
