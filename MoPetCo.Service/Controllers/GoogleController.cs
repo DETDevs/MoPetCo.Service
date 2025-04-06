@@ -35,7 +35,8 @@ namespace MoPetCo.Service.Controllers
 
                 return Ok(response);
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
@@ -47,17 +48,18 @@ namespace MoPetCo.Service.Controllers
             try
             {
 
-            var response = await _googleService.ObtenerReviewsAsync(placeId);
+                var response = await _googleService.ObtenerReviewsAsync(placeId);
 
-            if (!response.IsSuccess)
-                return BadRequest(new { message = response.Message });
+                if (!response.IsSuccess)
+                    return BadRequest(new { message = response.Message });
 
-            return Content(response.Content, "application/json");
+                return Content(response.Content, "application/json");
 
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
+        }
     }
 }
