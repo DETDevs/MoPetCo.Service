@@ -21,70 +21,47 @@ namespace MoPetCo.DataAccess
 
         public async Task<Models.Response<Models.Imagen>> GuardarImagenAsync(Models.Imagen img)
         {
-            try
-            {
-                using var connection = this.connectionManager.GetConnectionString(ConnectionManager.connectionStringKey);
+            using var connection = this.connectionManager.GetConnectionString(ConnectionManager.connectionStringKey);
 
-                var resultado = await connection.QueryAsync<Models.Imagen>(
+            var resultado = await connection.QueryAsync<Models.Imagen>(
 
-                    "sp_Imagen_Guardar",
-                    param: new
-                    {
-                        img.Descripcion,
-                        img.UrlImagen
-                    },
-                    commandType: CommandType.StoredProcedure
-                );
+                "sp_Imagen_Guardar",
+                param: new
+                {
+                    img.Descripcion,
+                    img.UrlImagen
+                },
+                commandType: CommandType.StoredProcedure
+            );
 
-                return new Response<Models.Imagen> { Content = resultado.FirstOrDefault(), IsSuccess = true, Message = "Imagen Guardadado correctamente" };
+            return new Response<Models.Imagen> { Content = resultado.FirstOrDefault(), IsSuccess = true, Message = "Imagen Guardadado correctamente" };
 
-            }
-            catch (Exception ex)
-            {
-                return new Response<Models.Imagen> { Message = ex.Message, IsSuccess = false };
-            }
         }
 
         public async Task<Models.Response<IEnumerable<Models.Imagen>>> ObtenerImagenesAsync()
         {
-            try
-            {
-                using var connection = this.connectionManager.GetConnectionString(ConnectionManager.connectionStringKey);
+            using var connection = this.connectionManager.GetConnectionString(ConnectionManager.connectionStringKey);
 
-                var resultado = await connection.QueryAsync<Models.Imagen>(
+            var resultado = await connection.QueryAsync<Models.Imagen>(
 
-                    "sp_Imagen_Listar",
-                    commandType: CommandType.StoredProcedure
-                );
+                "sp_Imagen_Listar",
+                commandType: CommandType.StoredProcedure
+            );
 
-                return new Response<IEnumerable<Models.Imagen>> { Content = resultado, IsSuccess = true };
-
-            }
-            catch (Exception ex)
-            {
-                return new Response<IEnumerable<Models.Imagen>> { Message = ex.Message, IsSuccess = false };
-            }
+            return new Response<IEnumerable<Models.Imagen>> { Content = resultado, IsSuccess = true };
         }
 
         public async Task<Response<IEnumerable<Video>>> ObtenerVideosAsync()
         {
-            try
-            {
-                using var connection = this.connectionManager.GetConnectionString(ConnectionManager.connectionStringKey);
+            using var connection = this.connectionManager.GetConnectionString(ConnectionManager.connectionStringKey);
 
-                var resultado = await connection.QueryAsync<Models.Video>(
+            var resultado = await connection.QueryAsync<Models.Video>(
 
-                    "sp_Video_Listar",
-                    commandType: CommandType.StoredProcedure
-                );
+                "sp_Video_Listar",
+                commandType: CommandType.StoredProcedure
+            );
 
-                return new Response<IEnumerable<Models.Video>> { Content = resultado, IsSuccess = true };
-
-            }
-            catch (Exception ex)
-            {
-                return new Response<IEnumerable<Models.Video>> { Message = ex.Message, IsSuccess = false };
-            }
+            return new Response<IEnumerable<Models.Video>> { Content = resultado, IsSuccess = true };
         }
     }
 }

@@ -26,14 +26,7 @@ namespace MoPetCo.BusinessLogic
             var urlApi = configGoogleMaps.Values["apiUrl"];
 
             var response = await _httpClient.GetAsync($"{urlApi}{placeId}&fields=name,rating,reviews&key={apiKey}");
-
-            if (!response.IsSuccessStatusCode)
-                return new Response<string>
-                {
-                    IsSuccess = false,
-                    Message = "Error al consumir la API de Google",
-                    Content = null
-                };
+            response.EnsureSuccessStatusCode();
 
             var json = await response.Content.ReadAsStringAsync();
 
@@ -69,51 +62,12 @@ namespace MoPetCo.BusinessLogic
             });
 
             HttpResponseMessage response;
-            try
-            {
-                response = await _httpClient.PostAsync(googleUrl, content);
-            }
-            catch (System.Exception ex)
-            {
-                return new Response<bool>
-                {
-                    IsSuccess = false,
-                    Message = $"Error al consumir la API de Google: {ex.Message}",
-                    Content = false
-                };
-            }
-
-            if (!response.IsSuccessStatusCode)
-            {
-                return new Response<bool>
-                {
-                    IsSuccess = false,
-                    Message = "Error al consumir la API de Google (Status Code != 200).",
-                    Content = false
-                };
-            }
+            response = await _httpClient.PostAsync(googleUrl, content);
+            response.EnsureSuccessStatusCode();
 
             var json = await response.Content.ReadAsStringAsync();
-            if (string.IsNullOrEmpty(json))
-            {
-                return new Response<bool>
-                {
-                    IsSuccess = false,
-                    Message = "Error: la respuesta de Google está vacía.",
-                    Content = false
-                };
-            }
 
             var googleResponse = JsonConvert.DeserializeObject<GoogleCaptchaResponse>(json);
-            if (googleResponse == null)
-            {
-                return new Response<bool>
-                {
-                    IsSuccess = false,
-                    Message = "No se pudo deserializar la respuesta de Google.",
-                    Content = false
-                };
-            }
 
             return new Response<bool>
             {

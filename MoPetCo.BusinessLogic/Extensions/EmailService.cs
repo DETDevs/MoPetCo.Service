@@ -14,37 +14,29 @@ namespace MoPetCo.BusinessLogic.Extensions
 
         public async Task EnviarCorreoAsync(string destinatario, string asunto, string mensaje)
         {
-            try
+            var EmailConfig = _customValuesConfiguration.GetCustomValueByName("EmailConfiguration");
+
+            var smtpServer = EmailConfig.Values["smtpServer"];
+            var smtpPort = EmailConfig.Values["smtpPort"];
+            var smtpUser = EmailConfig.Values["smtpUser"];
+            var smtpPass = EmailConfig.Values["smtpPass"];
+
+
+            using (var client = new SmtpClient(smtpServer, Convert.ToInt32(smtpPort)))
             {
-                var EmailConfig = _customValuesConfiguration.GetCustomValueByName("EmailConfiguration");
+                client.Credentials = new NetworkCredential(smtpUser, smtpPass);
+                client.EnableSsl = true;
 
-                var smtpServer = EmailConfig.Values["smtpServer"];
-                var smtpPort = EmailConfig.Values["smtpPort"];
-                var smtpUser = EmailConfig.Values["smtpUser"];
-                var smtpPass = EmailConfig.Values["smtpPass"];
-
-
-                using (var client = new SmtpClient(smtpServer, Convert.ToInt32(smtpPort)))
+                var mail = new MailMessage
                 {
-                    client.Credentials = new NetworkCredential(smtpUser, smtpPass);
-                    client.EnableSsl = true;
+                    From = new MailAddress(smtpUser),
+                    Subject = asunto,
+                    Body = mensaje,
+                    IsBodyHtml = true
+                };
+                mail.To.Add(destinatario);
 
-                    var mail = new MailMessage
-                    {
-                        From = new MailAddress(smtpUser),
-                        Subject = asunto,
-                        Body = mensaje,
-                        IsBodyHtml = true
-                    };
-                    mail.To.Add(destinatario);
-
-                    await client.SendMailAsync(mail);
-                    Console.WriteLine("Correo enviado correctamente.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error al enviar el correo: {ex.Message}");
+                await client.SendMailAsync(mail);
             }
         }
     }
