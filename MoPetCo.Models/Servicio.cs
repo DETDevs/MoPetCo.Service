@@ -18,8 +18,8 @@ namespace MoPetCo.Models
         public string? Icon { get; set; }
         public string? UrlImagen { get; set; }
         public int IdSubServicio { get; set; }
+        public string nota { get; set; }
         public List<Precio> Precio { get; set; } = new List<Precio>();
-
         [NotMapped]
         public List<IncluyeItem> IncluyeLista
         {
