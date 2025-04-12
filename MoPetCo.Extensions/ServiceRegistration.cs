@@ -10,12 +10,13 @@ namespace MoPetCo.Extensions
         {
             services.AddSingleton<IConnectionManager, ConnectionManager>();
             services.AddScoped<IServicio, Servicio>();
-            //services.AddScoped<BusinessLogic.Interfaces.IServicio, BusinessLogic.Servicio>();
             services.AddScoped<IContacto, Contacto>();
+            services.AddScoped<IMedia, Media>();
+            services.AddScoped<IPromociones, Promociones>();
+            //services.AddScoped<BusinessLogic.Interfaces.IServicio, BusinessLogic.Servicio>();
             //services.AddScoped<BusinessLogic.Interfaces.IContacto, BusinessLogic.Contacto>();
             //services.AddScoped<EmailService>();
             //services.AddScoped<FileHelper>();
-            services.AddScoped<IMedia, Media>();
             //services.AddScoped<BusinessLogic.Interfaces.IMedia, BusinessLogic.Media>();
         }
     }

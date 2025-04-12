@@ -22,6 +22,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<CustomValuesConfiguration>();
 builder.Services.AddScoped<IServicio, MoPetCo.BusinessLogic.Servicio>();
 builder.Services.AddScoped<IContacto, MoPetCo.BusinessLogic.Contacto>();
+builder.Services.AddScoped<IPromociones, MoPetCo.BusinessLogic.Promociones>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<FileHelper>();
 builder.Services.AddScoped<GoogleService>();
