@@ -20,13 +20,14 @@ namespace MoPetCo.BusinessLogic.Extensions
             var email = FirebaseConfig.Values["email"];
             var password = FirebaseConfig.Values["password"];
             var projectUrl = FirebaseConfig.Values["projectUrl"];
+            var authDomain = FirebaseConfig.Values["authDomain"];
             var api_key = FirebaseConfig.Values["apiKey"];
 
             // Configurar el cliente de autenticación
             var config = new FirebaseAuthConfig
             {
                 ApiKey = api_key,
-                AuthDomain = "",
+                AuthDomain = authDomain,
                 Providers = new FirebaseAuthProvider[]
                 {
                     new EmailProvider()
