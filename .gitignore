@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+#env.values.json
+env.values.json
+
 # User-specific files
 *.rsuser
 *.suo
