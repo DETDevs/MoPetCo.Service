@@ -1,9 +1,5 @@
-using MoPetCo.BusinessLogic;
-using MoPetCo.BusinessLogic.Extensions;
-using MoPetCo.BusinessLogic.Interfaces;
-using MoPetCo.DataAccess;
+using DET.Common;
 using MoPetCo.Extensions;
-using MoPetCo.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,17 +12,9 @@ builder.Services.AddSwaggerGen();
 
 //Configuring services for the application
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);   
-builder.Services.AddMoPetCoServices();
 builder.Services.AddHttpClient();
 
-builder.Services.AddScoped<CustomValuesConfiguration>();
-builder.Services.AddScoped<IServicio, MoPetCo.BusinessLogic.Servicio>();
-builder.Services.AddScoped<IContacto, MoPetCo.BusinessLogic.Contacto>();
-builder.Services.AddScoped<IPromociones, MoPetCo.BusinessLogic.Promociones>();
-builder.Services.AddScoped<EmailService>();
-builder.Services.AddScoped<FileHelper>();
-builder.Services.AddScoped<GoogleService>();
-builder.Services.AddScoped<IMedia, MoPetCo.BusinessLogic.Media>();
+builder.Services.AddConfigServices();
 
 // CORS: Permitir peticiones desde Vite (localhost:5173)
 builder.Services.AddCors(options =>
@@ -43,15 +31,11 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
-
-
-app.UseSwagger();
-app.UseSwaggerUI();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 

@@ -1,0 +1,67 @@
+[
+  {
+    "Interface": "MoPetCo.Extensions.CustomValuesConfiguration",
+    "Implementation": "MoPetCo.Extensions.CustomValuesConfiguration",
+    "Lifetime": "Scoped"
+  },
+  {
+    "Interface": "MoPetCo.BusinessLogic.Interfaces.IServicio",
+    "Implementation": "MoPetCo.BusinessLogic.Servicio",
+    "Lifetime": "Scoped"
+  },
+  {
+    "Interface": "MoPetCo.BusinessLogic.Interfaces.IContacto",
+    "Implementation": "MoPetCo.BusinessLogic.Contacto",
+    "Lifetime": "Scoped"
+  },
+  {
+    "Interface": "MoPetCo.BusinessLogic.Interfaces.IPromociones",
+    "Implementation": "MoPetCo.BusinessLogic.Promociones",
+    "Lifetime": "Scoped"
+  },
+  {
+    "Interface": "MoPetCo.BusinessLogic.Extensions.EmailService",
+    "Implementation": "MoPetCo.BusinessLogic.Extensions.EmailService",
+    "Lifetime": "Scoped"
+  },
+  {
+    "Interface": "MoPetCo.BusinessLogic.Extensions.FileHelper",
+    "Implementation": "MoPetCo.BusinessLogic.Extensions.FileHelper",
+    "Lifetime": "Scoped"
+  },
+  {
+    "Interface": "MoPetCo.BusinessLogic.GoogleService",
+    "Implementation": "MoPetCo.BusinessLogic.GoogleService",
+    "Lifetime": "Scoped"
+  },
+  {
+    "Interface": "MoPetCo.BusinessLogic.Interfaces.IMedia",
+    "Implementation": "MoPetCo.BusinessLogic.Media",
+    "Lifetime": "Scoped"
+  },
+  {
+    "Interface": "MoPetCo.DataAccess.Interfaces.IConnectionManager",
+    "Implementation": "MoPetCo.DataAccess.ConnectionManager",
+    "Lifetime": "Singleton"
+  },
+  {
+    "Interface": "MoPetCo.DataAccess.Interfaces.IServicio",
+    "Implementation": "MoPetCo.DataAccess.Servicio",
+    "Lifetime": "Scoped"
+  },
+  {
+    "Interface": "MoPetCo.DataAccess.Interfaces.IContacto",
+    "Implementation": "MoPetCo.DataAccess.Contacto",
+    "Lifetime": "Scoped"
+  },
+  {
+    "Interface": "MoPetCo.DataAccess.Interfaces.IMedia",
+    "Implementation": "MoPetCo.DataAccess.Media",
+    "Lifetime": "Scoped"
+  },
+  {
+    "Interface": "MoPetCo.DataAccess.Interfaces.IPromociones",
+    "Implementation": "MoPetCo.DataAccess.Promociones",
+    "Lifetime": "Scoped"
+  }
+]
