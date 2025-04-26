@@ -1,5 +1,8 @@
-﻿using System.Net.Mail;
-using System.Net;
+﻿using System.Net;
+using MimeKit;
+using System.Net.Mail;
+using SystemSmtpClient = System.Net.Mail.SmtpClient;
+using MailKitSmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace MoPetCo.BusinessLogic.Extensions
 {
@@ -22,7 +25,7 @@ namespace MoPetCo.BusinessLogic.Extensions
             var smtpPass = EmailConfig.Values["smtpPass"];
 
 
-            using (var client = new SmtpClient(smtpServer, Convert.ToInt32(smtpPort)))
+            using (var client = new SystemSmtpClient(smtpServer, Convert.ToInt32(smtpPort)))
             {
                 client.Credentials = new NetworkCredential(smtpUser, smtpPass);
                 client.EnableSsl = true;
@@ -38,6 +41,28 @@ namespace MoPetCo.BusinessLogic.Extensions
 
                 await client.SendMailAsync(mail);
             }
+        }
+
+        public async Task EnviarCorreoConMailKitAsync(string destinatario, string asunto, string mensaje)
+        {
+            var EmailConfig = _customValuesConfiguration.GetCustomValueByName("MailKit");
+
+            var email = new MimeMessage();
+            email.From.Add(new MailboxAddress("MoPetCo", EmailConfig.Values["smtpUser"]));
+            email.To.Add(MailboxAddress.Parse(destinatario));
+            email.Subject = asunto;
+
+            var builder = new BodyBuilder
+            {
+                HtmlBody = mensaje
+            };
+            email.Body = builder.ToMessageBody();
+
+            using var smtp = new MailKitSmtpClient();
+            await smtp.ConnectAsync(EmailConfig.Values["smtpServer"], Convert.ToInt32(EmailConfig.Values["smtpPort"]), MailKit.Security.SecureSocketOptions.SslOnConnect);
+            await smtp.AuthenticateAsync(EmailConfig.Values["smtpUser"], EmailConfig.Values["smtpPass"]);
+            await smtp.SendAsync(email);
+            await smtp.DisconnectAsync(true);
         }
     }
 }

@@ -92,9 +92,9 @@ namespace MoPetCo.BusinessLogic
             #endregion
 
             var emailService = new EmailService(_customValuesConfiguration);
-            await emailService.EnviarCorreoAsync(
-                "at2899743@gmail.com",
-                "MoPetCo",
+            await emailService.EnviarCorreoConMailKitAsync(
+                "info@mopetco.com",
+                "MoPetCo Info",
                 mensaje
             );
 
