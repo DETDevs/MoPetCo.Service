@@ -3,6 +3,8 @@ using MoPetCo.BusinessLogic.Interfaces;
 using MoPetCo.Models;
 using static System.Net.Mime.MediaTypeNames;
 using System.Drawing;
+using System.Net.Http;
+using System.Text.Json;
 
 namespace MoPetCo.BusinessLogic
 {
@@ -11,12 +13,15 @@ namespace MoPetCo.BusinessLogic
         private readonly DataAccess.Interfaces.IContacto? contacto;
         private readonly EmailService? emailService;
         private readonly MoPetCo.Extensions.CustomValuesConfiguration _customValuesConfiguration;
+        private readonly HttpClient _httpClient;
 
-        public Contacto(DataAccess.Interfaces.IContacto? contacto, EmailService? emailService, MoPetCo.Extensions.CustomValuesConfiguration customValuesConfiguration)
+        public Contacto(DataAccess.Interfaces.IContacto? contacto, EmailService? emailService, MoPetCo.Extensions.CustomValuesConfiguration customValuesConfiguration, HttpClient httpClient)
         {
             this.contacto = contacto;
             this.emailService = emailService;
             _customValuesConfiguration = customValuesConfiguration;
+            _httpClient = httpClient;
+
         }
 
         public async Task<Response<Models.Contacto>> EnviarEmailAsync(Models.Contacto contacto)
@@ -104,6 +109,24 @@ namespace MoPetCo.BusinessLogic
         public async Task SendValidationCodeAsync(string toEmail, string code)
         {
             await emailService.SendValidationCodeAsync(toEmail, code);
+        }
+
+        public async Task<ZippopotamResponse?> ValidateZipCodeAsync(string countryCode, string zipCode)
+        {
+            var url = $"https://api.zippopotam.us/{countryCode}/{zipCode}";
+
+            var response = await _httpClient.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ZippopotamResponse>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            return result;
         }
     }
 }

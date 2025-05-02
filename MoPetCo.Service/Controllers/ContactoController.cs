@@ -53,8 +53,20 @@ namespace MoPetCo.Service.Controllers
             else
                 return BadRequest("Código inválido.");
         }
+
+        [HttpGet("validate/{zipCode}/{countryCode?}")]
+        public async Task<IActionResult> Validate(string zipCode, string countryCode = "US")
+        {
+            var result = await contacto.ValidateZipCodeAsync(countryCode, zipCode);
+
+            if (result == null)
+                return NotFound(new { message = "ZIP code not found." });
+
+            return Ok(result);
+        }
+
     }
-    
+
     public record ValidateRequest(string Email, string Code);
 
 }
