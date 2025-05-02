@@ -100,5 +100,10 @@ namespace MoPetCo.BusinessLogic
 
             return await this.contacto.GuardarContactoAsync(contacto);
         }
+
+        public async Task SendValidationCodeAsync(string toEmail, string code)
+        {
+            await emailService.SendValidationCodeAsync(toEmail, code);
+        }
     }
 }

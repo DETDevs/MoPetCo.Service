@@ -3,6 +3,7 @@ using MimeKit;
 using System.Net.Mail;
 using SystemSmtpClient = System.Net.Mail.SmtpClient;
 using MailKitSmtpClient = MailKit.Net.Smtp.SmtpClient;
+using MailKit.Security;
 
 namespace MoPetCo.BusinessLogic.Extensions
 {
@@ -62,6 +63,26 @@ namespace MoPetCo.BusinessLogic.Extensions
             await smtp.ConnectAsync(EmailConfig.Values["smtpServer"], Convert.ToInt32(EmailConfig.Values["smtpPort"]), MailKit.Security.SecureSocketOptions.SslOnConnect);
             await smtp.AuthenticateAsync(EmailConfig.Values["smtpUser"], EmailConfig.Values["smtpPass"]);
             await smtp.SendAsync(email);
+            await smtp.DisconnectAsync(true);
+        }
+
+        public async Task SendValidationCodeAsync(string toEmail, string code)
+        {
+            var EmailConfig = _customValuesConfiguration.GetCustomValueByName("MailKit");
+
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Mopetco", EmailConfig.Values["smtpUser"]));
+            message.To.Add(MailboxAddress.Parse(toEmail));
+            message.Subject = "Código de verificación";
+            message.Body = new TextPart("plain")
+            {
+                Text = $"Tu código de verificación es: {code}"
+            };
+
+            using var smtp = new MailKitSmtpClient();
+            await smtp.ConnectAsync(EmailConfig.Values["smtpServer"], Convert.ToInt32(EmailConfig.Values["smtpPort"]), MailKit.Security.SecureSocketOptions.SslOnConnect);
+            await smtp.AuthenticateAsync(EmailConfig.Values["smtpUser"], EmailConfig.Values["smtpPass"]);
+            await smtp.SendAsync(message);
             await smtp.DisconnectAsync(true);
         }
     }

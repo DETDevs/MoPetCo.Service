@@ -63,5 +63,10 @@
     "Interface": "MoPetCo.DataAccess.Interfaces.IPromociones",
     "Implementation": "MoPetCo.DataAccess.Promociones",
     "Lifetime": "Scoped"
+  },
+  {
+    "Interface": "MoPetCo.BusinessLogic.Extensions.CodeStorage",
+    "Implementation": "MoPetCo.BusinessLogic.Extensions.CodeStorage",
+    "Lifetime": "Singleton"
   }
 ]

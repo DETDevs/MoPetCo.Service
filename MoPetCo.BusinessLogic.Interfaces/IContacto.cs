@@ -5,5 +5,6 @@ namespace MoPetCo.BusinessLogic.Interfaces
     public interface IContacto
     {
         Task<Response<Contacto>> EnviarEmailAsync(Contacto contacto);
+        Task SendValidationCodeAsync(string toEmail, string code);
     }
 }
