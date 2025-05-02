@@ -1,7 +1,4 @@
-using MoPetCo.BusinessLogic;
-using MoPetCo.BusinessLogic.Interfaces;
-using MoPetCo.DataAccess;
-using MoPetCo.DataAccess.Interfaces;
+using DET.Common;
 using MoPetCo.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,9 +11,23 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Configuring services for the application
-builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
-builder.Services.AddMoPetCoServices();
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);   
+builder.Services.AddHttpClient();
 
+builder.Services.AddConfigServices();
+
+// CORS: Permitir peticiones desde Vite (localhost:5173)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,6 +36,7 @@ var app = builder.Build();
 //    app.UseSwagger();
 //    app.UseSwaggerUI();
 //}
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -33,5 +45,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowAll");
 
 app.Run();

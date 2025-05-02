@@ -7,7 +7,7 @@ namespace MoPetCo.Models
     {
         public int IdPrecio { get; set; }
 
-        public decimal? Monto { get; set; }
+        public string? Monto { get; set; }
 
         public RangoPeso? RangoPeso { get; set; }
 

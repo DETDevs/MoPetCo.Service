@@ -28,7 +28,45 @@ namespace MoPetCo.Service.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet(Name = "Obtener Imaganes")]
+        public async Task<IActionResult> ObtenerImagenes()
+        {
+            try
+            {
+                var resultado = await _media.ObtenerImagenesAsync();
+
+                if (!resultado.IsSuccess)
+                    return StatusCode(StatusCodes.Status400BadRequest, resultado.Content);
+
+                return Ok(resultado);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet(Name = "Obtener Videos")]
+        public async Task<IActionResult> ObtenerVideos()
+        {
+            try
+            {
+                var resultado = await _media.ObtenerVideoAsync();
+
+                if (!resultado.IsSuccess)
+                    return StatusCode(StatusCodes.Status400BadRequest, resultado.Content);
+
+                return Ok(resultado);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
     }

@@ -16,33 +16,26 @@ namespace MoPetCo.DataAccess
 
         public async Task<Response<Models.Contacto>> GuardarContactoAsync(Models.Contacto contacto)
         {
-            try
-            {
-                using var connection = this.connectionManager.GetConnectionString(ConnectionManager.connectionStringKey);
+            using var connection = this.connectionManager.GetConnectionString(ConnectionManager.connectionStringKey);
 
-                var resultado = await connection.QueryAsync<Models.Contacto>(
+            var resultado = await connection.QueryAsync<Models.Contacto>(
 
-                    "sp_Contacto_Guardar",
-                    param: new
-                    {
-                        contacto.Nombre,
-                        contacto.Correo,
-                        contacto.Direccion,
-                        contacto.Mensaje,
-                        contacto.FechaEnvio,
-                        contacto.Estado
+                "sp_Contacto_Guardar",
+                param: new
+                {
+                    contacto.Nombre,
+                    contacto.Correo,
+                    contacto.Direccion,
+                    contacto.Mensaje,
+                    contacto.FechaEnvio,
+                    contacto.Estado
 
-                    },
-                    commandType: CommandType.StoredProcedure
-                );
+                },
+                commandType: CommandType.StoredProcedure
+            );
 
-                return new Response<Models.Contacto> { Content = resultado.FirstOrDefault(), IsSuccess = true, Message = "Registro de contacto guardadado correctamente" };
+            return new Response<Models.Contacto> { Content = resultado.FirstOrDefault(), IsSuccess = true, Message = "Registro de contacto guardadado correctamente" };
 
-            }
-            catch (Exception ex)
-            {
-                return new Response<Models.Contacto> { Message = ex.Message, IsSuccess = false };
-            }
         }
     }
 }

@@ -34,7 +34,12 @@ namespace MoPetCo.BusinessLogic
 
         public Task<Response<IEnumerable<Imagen>>> ObtenerImagenesAsync()
         {
-            throw new NotImplementedException();
+            return media.ObtenerImagenesAsync();
+        }
+
+        public Task<Response<IEnumerable<Video>>> ObtenerVideoAsync()
+        {
+            return media.ObtenerVideosAsync();
         }
     }
 }

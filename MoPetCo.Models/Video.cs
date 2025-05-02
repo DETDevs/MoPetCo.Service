@@ -12,5 +12,6 @@ namespace MoPetCo.Models
 
         [Required, MaxLength(500)]
         public string UrlVideo { get; set; }
+        public string Tipo { get; set; }
     }
 }

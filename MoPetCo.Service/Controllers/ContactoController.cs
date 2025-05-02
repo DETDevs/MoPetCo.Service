@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MoPetCo.BusinessLogic.Extensions;
 using MoPetCo.BusinessLogic.Interfaces;
 using MoPetCo.Models;
 
@@ -9,10 +10,11 @@ namespace MoPetCo.Service.Controllers
     public class ContactoController : Controller
     {
         public readonly IContacto contacto;
-
-        public ContactoController(IContacto contacto)
+        public readonly CodeStorage codeStorage;
+        public ContactoController(IContacto contacto, CodeStorage codeStorage)
         {
             this.contacto = contacto;
+            this.codeStorage = codeStorage;
         }
 
         [HttpPost(Name = "EnviarEmail")]
@@ -30,8 +32,41 @@ namespace MoPetCo.Service.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpPost("send-code")]
+        public async Task<IActionResult> SendCode([FromBody] string email)
+        {
+            var code = new Random().Next(100000, 999999).ToString();
+            codeStorage.SaveCode(email, code);
+            await contacto.SendValidationCodeAsync(email, code);
+            return Ok("Código enviado.");
+        }
+
+        [HttpPost("validate-code")]
+        public IActionResult ValidateCode([FromBody] ValidateRequest request)
+        {
+            if (codeStorage.ValidateCode(request.Email, request.Code))
+                return Ok("Código válido.");
+            else
+                return BadRequest("Código inválido.");
+        }
+
+        [HttpGet("validate/{zipCode}/{countryCode?}")]
+        public async Task<IActionResult> Validate(string zipCode, string countryCode = "US")
+        {
+            var result = await contacto.ValidateZipCodeAsync(countryCode, zipCode);
+
+            if (result == null)
+                return NotFound(new { message = "ZIP code not found." });
+
+            return Ok(result);
+        }
+
     }
+
+    public record ValidateRequest(string Email, string Code);
+
 }

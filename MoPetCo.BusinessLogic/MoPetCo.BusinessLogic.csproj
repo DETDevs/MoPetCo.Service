@@ -10,6 +10,7 @@
     <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
     <PackageReference Include="FirebaseStorage.net" Version="1.0.3" />
+    <PackageReference Include="MailKit" Version="4.11.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.3" />
   </ItemGroup>
@@ -17,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MoPetCo.BusinessLogic.Interfaces\MoPetCo.BusinessLogic.Interfaces.csproj" />
     <ProjectReference Include="..\MoPetCo.DataAccess.Interfaces\MoPetCo.DataAccess.Interfaces.csproj" />
+    <ProjectReference Include="..\MoPetCo.Extensions\MoPetCo.Extensions.csproj" />
   </ItemGroup>
 
 </Project>

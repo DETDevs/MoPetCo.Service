@@ -48,7 +48,7 @@ namespace MoPetCo.Service.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
@@ -58,6 +58,25 @@ namespace MoPetCo.Service.Controllers
             try
             {
                 var resultado = await this.servicio.ObtenerServiciosDetallesAsync();
+
+                if (!resultado.IsSuccess)
+                    return StatusCode(StatusCodes.Status400BadRequest, resultado.Content);
+
+                return Ok(resultado);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
+
+        [HttpGet(Name = "ObtenerSubServicioDetalles")]
+        public async Task<IActionResult> ObtenerSubServicios()
+        {
+            try
+            {
+                var resultado = await this.servicio.ObtenerSubServiciosDetallesAsync();
 
                 if (!resultado.IsSuccess)
                     return StatusCode(StatusCodes.Status400BadRequest, resultado.Content);

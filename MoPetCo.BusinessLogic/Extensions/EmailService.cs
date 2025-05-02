@@ -1,41 +1,89 @@
-﻿using System.Net.Mail;
-using System.Net;
+﻿using System.Net;
+using MimeKit;
+using System.Net.Mail;
+using SystemSmtpClient = System.Net.Mail.SmtpClient;
+using MailKitSmtpClient = MailKit.Net.Smtp.SmtpClient;
+using MailKit.Security;
 
 namespace MoPetCo.BusinessLogic.Extensions
 {
     public class EmailService
     {
-        private readonly string smtpServer = "smtp.gmail.com"; // Servidor SMTP (Ej: Gmail)
-        private readonly int smtpPort = 587; // Puerto SMTP (587 para TLS)
-        private readonly string smtpUser = ""; // Correo remitente
-        private readonly string smtpPass = ""; // Contraseña o App Password
+        private readonly MoPetCo.Extensions.CustomValuesConfiguration _customValuesConfiguration;
+
+        public EmailService(MoPetCo.Extensions.CustomValuesConfiguration? customValuesConfiguration)
+        {
+            _customValuesConfiguration = customValuesConfiguration;
+        }
 
         public async Task EnviarCorreoAsync(string destinatario, string asunto, string mensaje)
         {
-            try
+            var EmailConfig = _customValuesConfiguration.GetCustomValueByName("EmailConfiguration");
+
+            var smtpServer = EmailConfig.Values["smtpServer"];
+            var smtpPort = EmailConfig.Values["smtpPort"];
+            var smtpUser = EmailConfig.Values["smtpUser"];
+            var smtpPass = EmailConfig.Values["smtpPass"];
+
+
+            using (var client = new SystemSmtpClient(smtpServer, Convert.ToInt32(smtpPort)))
             {
-                using (var client = new SmtpClient(smtpServer, smtpPort))
+                client.Credentials = new NetworkCredential(smtpUser, smtpPass);
+                client.EnableSsl = true;
+
+                var mail = new MailMessage
                 {
-                    client.Credentials = new NetworkCredential(smtpUser, smtpPass);
-                    client.EnableSsl = true;
+                    From = new MailAddress(smtpUser),
+                    Subject = asunto,
+                    Body = mensaje,
+                    IsBodyHtml = true
+                };
+                mail.To.Add(destinatario);
 
-                    var mail = new MailMessage
-                    {
-                        From = new MailAddress(smtpUser),
-                        Subject = asunto,
-                        Body = mensaje,
-                        IsBodyHtml = true
-                    };
-                    mail.To.Add(destinatario);
-
-                    await client.SendMailAsync(mail);
-                    Console.WriteLine("Correo enviado correctamente.");
-                }
+                await client.SendMailAsync(mail);
             }
-            catch (Exception ex)
+        }
+
+        public async Task EnviarCorreoConMailKitAsync(string destinatario, string asunto, string mensaje)
+        {
+            var EmailConfig = _customValuesConfiguration.GetCustomValueByName("MailKit");
+
+            var email = new MimeMessage();
+            email.From.Add(new MailboxAddress("MoPetCo", EmailConfig.Values["smtpUser"]));
+            email.To.Add(MailboxAddress.Parse(destinatario));
+            email.Subject = asunto;
+
+            var builder = new BodyBuilder
             {
-                Console.WriteLine($"Error al enviar el correo: {ex.Message}");
-            }
+                HtmlBody = mensaje
+            };
+            email.Body = builder.ToMessageBody();
+
+            using var smtp = new MailKitSmtpClient();
+            await smtp.ConnectAsync(EmailConfig.Values["smtpServer"], Convert.ToInt32(EmailConfig.Values["smtpPort"]), MailKit.Security.SecureSocketOptions.SslOnConnect);
+            await smtp.AuthenticateAsync(EmailConfig.Values["smtpUser"], EmailConfig.Values["smtpPass"]);
+            await smtp.SendAsync(email);
+            await smtp.DisconnectAsync(true);
+        }
+
+        public async Task SendValidationCodeAsync(string toEmail, string code)
+        {
+            var EmailConfig = _customValuesConfiguration.GetCustomValueByName("MailKit");
+
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Mopetco", EmailConfig.Values["smtpUser"]));
+            message.To.Add(MailboxAddress.Parse(toEmail));
+            message.Subject = "Código de verificación";
+            message.Body = new TextPart("plain")
+            {
+                Text = $"Tu código de verificación es: {code}"
+            };
+
+            using var smtp = new MailKitSmtpClient();
+            await smtp.ConnectAsync(EmailConfig.Values["smtpServer"], Convert.ToInt32(EmailConfig.Values["smtpPort"]), MailKit.Security.SecureSocketOptions.SslOnConnect);
+            await smtp.AuthenticateAsync(EmailConfig.Values["smtpUser"], EmailConfig.Values["smtpPass"]);
+            await smtp.SendAsync(message);
+            await smtp.DisconnectAsync(true);
         }
     }
 }
